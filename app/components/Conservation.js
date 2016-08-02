@@ -6,7 +6,7 @@ class Conservation extends React.Component {
 	}
 	render() {
 		return (
-			<section className="overview">
+			<section className="conservation main-section">
 				<header className="section-top">
 					<h2 className="section-title">Conservation, Sustainability and the Environment</h2>
 				</header>

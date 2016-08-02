@@ -6,7 +6,7 @@ class Overview extends React.Component {
 	}
 	render() {
 		return (
-			<section className="overview">
+			<section className="overview main-section">
 				<header className="section-top">
 					<h2 className="section-title">An Overview</h2>
 				</header>

@@ -6,7 +6,7 @@ class Economy extends React.Component {
 	}
 	render() {
 		return (
-			<section className="overview">
+			<section className="economy main-section">
 				<header className="section-top">
 					<h2 className="section-title">The Economy</h2>
 				</header>

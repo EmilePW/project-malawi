@@ -6,7 +6,7 @@ class Health extends React.Component {
 	}
 	render() {
 		return (
-			<section className="overview">
+			<section className="health main-section">
 				<header className="section-top">
 					<h2 className="section-title">Healthcare and HIV/AIDS</h2>
 				</header>

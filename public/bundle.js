@@ -94,6 +94,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	__webpack_require__(241);
+
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
 
@@ -243,14 +245,55 @@
 /***/ function(module, exports) {
 
 	// shim for using process in browser
-
 	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	(function () {
+	    try {
+	        cachedSetTimeout = setTimeout;
+	    } catch (e) {
+	        cachedSetTimeout = function () {
+	            throw new Error('setTimeout is not defined');
+	        }
+	    }
+	    try {
+	        cachedClearTimeout = clearTimeout;
+	    } catch (e) {
+	        cachedClearTimeout = function () {
+	            throw new Error('clearTimeout is not defined');
+	        }
+	    }
+	} ())
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        return setTimeout(fun, 0);
+	    } else {
+	        return cachedSetTimeout.call(null, fun, 0);
+	    }
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        clearTimeout(marker);
+	    } else {
+	        cachedClearTimeout.call(null, marker);
+	    }
+	}
 	var queue = [];
 	var draining = false;
 	var currentQueue;
 	var queueIndex = -1;
 
 	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
 	    draining = false;
 	    if (currentQueue.length) {
 	        queue = currentQueue.concat(queue);
@@ -266,7 +309,7 @@
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = setTimeout(cleanUpNextTick);
+	    var timeout = runTimeout(cleanUpNextTick);
 	    draining = true;
 
 	    var len = queue.length;
@@ -283,7 +326,7 @@
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    clearTimeout(timeout);
+	    runClearTimeout(timeout);
 	}
 
 	process.nextTick = function (fun) {
@@ -295,7 +338,7 @@
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        setTimeout(drainQueue, 0);
+	        runTimeout(drainQueue);
 	    }
 	};
 
@@ -24375,11 +24418,19 @@
 	    arity: true
 	};
 
-	module.exports = function hoistNonReactStatics(targetComponent, sourceComponent) {
+	var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+
+	module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
 	    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
 	        var keys = Object.getOwnPropertyNames(sourceComponent);
-	        for (var i=0; i<keys.length; ++i) {
-	            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]]) {
+
+	        /* istanbul ignore else */
+	        if (isGetOwnPropertySymbolsAvailable) {
+	            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
+	        }
+
+	        for (var i = 0; i < keys.length; ++i) {
+	            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
 	                try {
 	                    targetComponent[keys[i]] = sourceComponent[keys[i]];
 	                } catch (error) {
@@ -25554,7 +25605,11 @@
 	  var useRefresh = !isSupported || forceRefresh;
 
 	  function getCurrentLocation(historyState) {
-	    historyState = historyState || window.history.state || {};
+	    try {
+	      historyState = historyState || window.history.state || {};
+	    } catch (e) {
+	      historyState = {};
+	    }
 
 	    var path = _DOMUtils.getWindowPath();
 	    var _historyState = historyState;
@@ -26044,7 +26099,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					"a",
-					{ href: "https://www.justgiving.com/ruxandrapopescu", target: "_blank" },
+					{ href: "http://www.villagereach.org/", target: "_blank" },
 					_react2.default.createElement(
 						"button",
 						{ className: "donate" },
@@ -28559,7 +28614,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					"section",
-					{ className: "overview" },
+					{ className: "overview main-section" },
 					_react2.default.createElement(
 						"header",
 						{ className: "section-top" },
@@ -28573,7 +28628,7 @@
 						"section",
 						{ className: "main-copy" },
 						_react2.default.createElement(
-							"p",
+							"article",
 							null,
 							"Malawi is a landlocked country in the south east of the African continent, bordered by Tanzania to the North, Zambia to the West, and Mozambique to the rest.",
 							_react2.default.createElement("br", null),
@@ -28654,7 +28709,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					"section",
-					{ className: "overview" },
+					{ className: "conservation main-section" },
 					_react2.default.createElement(
 						"header",
 						{ className: "section-top" },
@@ -28668,7 +28723,7 @@
 						"section",
 						{ className: "main-copy" },
 						_react2.default.createElement(
-							"p",
+							"article",
 							null,
 							"Composing the interface between Tanzania and Northern Mozambique is Lake Malawi, the 9th largest lake in the world, containing more species of fish than any other.",
 							_react2.default.createElement("br", null),
@@ -28742,7 +28797,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					"section",
-					{ className: "overview" },
+					{ className: "health main-section" },
 					_react2.default.createElement(
 						"header",
 						{ className: "section-top" },
@@ -28756,7 +28811,7 @@
 						"section",
 						{ className: "main-copy" },
 						_react2.default.createElement(
-							"p",
+							"article",
 							null,
 							"Life expectancy at birth in Malawi is 50 years old, although many don’t make it that far with high rates of infant mortality. There is a high risk for many diseases, including hepatitis A, typhoid fever, malaria, plague and rabies. The highest and most prevalent risk, however, is for HIV/AIDS.",
 							_react2.default.createElement("br", null),
@@ -28845,7 +28900,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					"section",
-					{ className: "overview" },
+					{ className: "economy main-section" },
 					_react2.default.createElement(
 						"header",
 						{ className: "section-top" },
@@ -28859,7 +28914,7 @@
 						"section",
 						{ className: "main-copy" },
 						_react2.default.createElement(
-							"p",
+							"article",
 							null,
 							"The active economy of Malawi is primarily agricultural, with around 90% of the population living in rural land. As a nation of farmers, tobacco is the primary export - despite its size, Malawi is the fifth largest producer of raw tobacco.",
 							_react2.default.createElement("br", null),
@@ -28903,6 +28958,354 @@
 	}(_react2.default.Component);
 
 	exports.default = Economy;
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(242);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(244)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./style.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./style.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(243)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n/* Layout */\n.flex {\n  display: flex;\n  flex-direction: row; }\n\n.flex-wrap {\n  flex-wrap: wrap; }\n\n.flex-h-center {\n  justify-content: center; }\n\n.flex-v-center {\n  align-items: center; }\n\n.flex-h-spaced {\n  justify-content: space-around; }\n\n.flex-v-spaced {\n  justify-content: space-around; }\n\n.flex-h-between {\n  justify-content: space-between; }\n\n.flex-v-between {\n  justify-content: space-between; }\n\n.text-center {\n  text-align: center; }\n\n.text-left {\n  text-align: left; }\n\n.center-self {\n  margin-left: auto;\n  margin-right: auto; }\n\n.center-child {\n  display: flex;\n  justify-content: center;\n  align-items: center; }\n\n.overlay-center {\n  position: absolute;\n  transform: translate(50%, -50%);\n  left: 50%;\n  top: 50%; }\n\n.main-section {\n  background: cornsilk;\n  height: 100%;\n  left: 0;\n  position: absolute;\n  top: 0;\n  width: 100%; }\n  .main-section .section-top {\n    height: 10%; }\n    .main-section .section-top .section-title {\n      font-family: 'ADA Hybrid Medium';\n      font-size: 16px;\n      letter-spacing: 1px;\n      line-height: 24px;\n      position: absolute;\n      right: 5%;\n      text-align: right;\n      top: 5%;\n      width: 30%; }\n  .main-section .main-copy {\n    box-sizing: border-box;\n    height: 90%;\n    padding: 50px;\n    position: absolute;\n    top: 7.5%; }\n    .main-section .main-copy article {\n      color: #222;\n      font-family: 'Roboto Mono';\n      font-size: 12px;\n      line-height: 24px;\n      text-align: justify; }\n      .main-section .main-copy article figure {\n        align-items: center;\n        background: white;\n        border: 4px solid wheat;\n        box-sizing: border-box;\n        display: block;\n        display: flex;\n        flex-wrap: wrap;\n        justify-content: center;\n        padding: 20px;\n        width: 100%; }\n        .main-section .main-copy article figure img {\n          width: 100%; }\n        .main-section .main-copy article figure figcaption {\n          display: block;\n          font-family: 'Roboto Mono';\n          font-weight: 500;\n          padding-top: 10px;\n          text-align: center;\n          width: 100%; }\n\n@media (max-width: 769px) {\n  .main-section .section-top .section-title {\n    width: 70%;\n    right: 15%; }\n  .main-section .main-copy article {\n    -moz-column-count: 1;\n    -webkit-column-count: 1; } }\n\n@media (min-width: 769px) {\n  .main-copy article {\n    -moz-column-count: 3;\n    -moz-column-gap: 50px;\n    -webkit-column-count: 3;\n    -webkit-column-gap: 50px; } }\n\n.donate {\n  align-items: center;\n  background: none;\n  border: 1px solid white;\n  color: white;\n  display: flex;\n  font-family: 'ADA Hybrid Medium';\n  font-size: 12px;\n  height: 50px;\n  justify-content: center;\n  letter-spacing: 1px;\n  line-height: 22px;\n  outline: none;\n  text-align: center;\n  width: 150px; }\n  .donate:hover {\n    background: green;\n    color: black; }\n\n@media (max-width: 769px) {\n  .donate {\n    height: 25px;\n    font-size: 10px; } }\n\n.footer {\n  align-items: center;\n  background: black;\n  box-sizing: border-box;\n  display: flex;\n  height: 18%;\n  justify-content: center;\n  position: absolute;\n  top: 82%;\n  width: 100%; }\n\n@media (max-width: 769px) {\n  .footer {\n    top: 75%;\n    height: 25%; } }\n\n.logo {\n  align-items: center;\n  background: black;\n  color: white;\n  display: flex;\n  font-family: 'ADA Hybrid Medium';\n  font-size: 14px;\n  height: 10%;\n  justify-content: center;\n  left: 0;\n  letter-spacing: 5px;\n  text-indent: 5px;\n  text-transform: uppercase;\n  top: 0;\n  width: 100%; }\n  .logo a {\n    color: white; }\n  .logo .first-word:after {\n    border-bottom: 1px solid green;\n    bottom: 0;\n    content: \"\";\n    height: 5px;\n    left: 12%;\n    position: absolute;\n    top: 6%;\n    width: 37%; }\n  .logo .second-word:after {\n    border-bottom: 1px solid red;\n    bottom: 0;\n    content: \"\";\n    height: 5px;\n    left: 53.5%;\n    position: absolute;\n    top: 6%;\n    width: 35%; }\n\n@media (max-width: 769px) {\n  .logo {\n    height: 20%; }\n    .logo .first-word:after {\n      left: 22%;\n      top: 12%;\n      width: 27%; }\n    .logo .second-word:after {\n      left: 52.5%;\n      top: 12%;\n      width: 26%; } }\n\n.main-content {\n  position: absolute;\n  top: 0;\n  right: 0;\n  width: 80%;\n  height: 100%; }\n\n@media all and (max-width: 769px) {\n  .main-content {\n    top: 250px;\n    width: 100%; } }\n\n.navigation {\n  height: 72%;\n  width: 100%;\n  top: 10%; }\n  .navigation ul {\n    align-items: center;\n    display: flex;\n    flex-direction: column;\n    height: 100%;\n    justify-content: space-around;\n    text-align: center; }\n    .navigation ul li {\n      align-items: center;\n      background: black;\n      box-sizing: border-box;\n      display: flex;\n      font-family: 'ADA Hybrid Medium';\n      font-size: 12px;\n      height: 20%;\n      justify-content: center;\n      letter-spacing: 1px;\n      line-height: 22px;\n      padding: 30px;\n      position: relative;\n      width: 100%;\n      z-index: 1; }\n      .navigation ul li:after {\n        border-bottom: 1px solid white;\n        bottom: 0%;\n        content: \"\";\n        height: 5px;\n        left: 30%;\n        position: absolute;\n        width: 40%; }\n      .navigation ul li a {\n        color: white; }\n\n@media (max-width: 769px) {\n  .navigation {\n    height: 55%; }\n    .navigation ul li {\n      font-size: 10px;\n      padding: 5px;\n      line-height: 15px; }\n      .navigation ul li:after {\n        height: 5px; } }\n\n.sidebar {\n  background: black;\n  color: white;\n  height: 100%;\n  left: 0;\n  position: absolute;\n  top: 0;\n  width: 20%; }\n\n@media (max-width: 769px) {\n  .sidebar {\n    width: 100%;\n    height: 250px; } }\n\n.splash {\n  align-items: center;\n  display: flex;\n  flex-wrap: wrap;\n  height: 100%;\n  justify-content: center;\n  width: 100%; }\n  .splash .splash-img {\n    -moz-filter: grayscale(1);\n    -ms-filter: grayscale(1);\n    -o-filter: grayscale(1);\n    -webkit-filter: grayscale(1);\n    background-size: cover;\n    background: url(\"https://upload.wikimedia.org/wikipedia/commons/8/8e/ILRI,_Stevie_Mann_-_Farm_landscape_in_central_Malawi.jpg\") no-repeat center center fixed;\n    filter: grayscale(1);\n    height: 100%;\n    left: 0;\n    position: absolute;\n    width: 100%; }\n  .splash .video {\n    height: 100%;\n    left: 0;\n    overflow: hidden;\n    position: absolute;\n    width: 100%;\n    z-index: -1; }\n  .splash .video__el {\n    height: 110%;\n    overflow: hidden;\n    z-index: -2; }\n  .splash .title-box {\n    width: 400px; }\n    .splash .title-box .title {\n      color: white;\n      font-family: 'ADA Hybrid Medium';\n      font-size: 50px;\n      letter-spacing: 10px;\n      line-height: 100px;\n      text-align: center;\n      text-indent: 10px;\n      text-transform: uppercase; }\n    .splash .title-box .black-strip {\n      background: black;\n      height: 3px;\n      margin: 0 auto;\n      width: 80%; }\n    .splash .title-box .red-strip {\n      background: firebrick;\n      height: 3px;\n      margin: 0 auto;\n      width: 80%; }\n    .splash .title-box .green-strip {\n      background: olivedrab;\n      height: 3px;\n      margin: 0 auto;\n      width: 80%; }\n  .splash .tagline {\n    color: white;\n    font-family: 'Roboto Mono';\n    font-size: 24px;\n    line-height: 36px;\n    letter-spacing: 3px;\n    text-indent: 3px;\n    margin-top: -200px;\n    text-align: center;\n    width: 100%; }\n\nbody {\n  background: cornsilk; }\n\n*::selection {\n  background: olivedrab;\n  color: white; }\n\na, a:visited, a:active {\n  text-decoration: none; }\n\n.sepia {\n  -webkit-filter: sepia(1);\n  filter: sepia(1); }\n\n.multiple-filters {\n  -webkit-filter: contrast(1.4) saturate(1.8) sepia(0.6);\n  filter: contrast(1.4) saturate(1.8) sepia(0.6); }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 243 */
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+
+		update(obj);
+
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+
+	var replaceText = (function () {
+		var textStore = [];
+
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+
+		var blob = new Blob([css], { type: "text/css" });
+
+		var oldSrc = linkElement.href;
+
+		linkElement.href = URL.createObjectURL(blob);
+
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
 
 /***/ }
 /******/ ]);
