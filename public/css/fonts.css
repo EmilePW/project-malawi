@@ -1,0 +1,49 @@
+@font-face {
+	src: url('../../fonts/ADA_Hybrid/ADAHybrid-Medium.ttf');
+	font-family: 'ADA Hybrid Medium';
+}
+
+@font-face {
+	src: url('../../fonts/Fanny_Coulez/Paris_regular.otf');
+	font-family: 'Paris Regular';
+}
+
+@font-face {
+	src: url('../../fonts/Fanny_Coulez/Paris_black.otf');
+	font-family: 'Paris Black';
+}
+
+@font-face {
+	src: url('../../fonts/Fanny_Coulez/Paris_xblack.otf');
+	font-family: 'Paris X-Black';
+}
+
+@font-face {
+	src: url('../../fonts/Radnika/Webfont/Regular/Radnika-Medium.woff2');
+	font-family: 'Radnika Medium';
+}
+
+@font-face {
+	src: url('../../fonts/Toma_Sans/Toma_Sans_Medium/WEB/TomaSans-Medium.woff2');
+	font-family: 'Toma Sans Medium';
+}
+
+@font-face {
+	src: url('../../fonts/Toma_Sans/Toma_Sans_Bold/WEB/TomaSans-Bold.woff2');
+	font-family: 'Toma Sans Bold';
+}
+
+@font-face {
+	src: url('../../fonts/Elenar/TTF/Elenar-Regular.ttf');
+	font-family: 'Elenar Regular';
+}
+
+@font-face {
+	src: url('../../fonts/Hanken_Sans/Web/HankenSans-Medium.woff2');
+	font-family: 'Hanken Sans Medium';
+}
+
+@font-face {
+	src: url('../../fonts/Hanken_Sans/Web/HankenSans-Regular.woff2');
+	font-family: 'Hanken Sans Regular';
+}

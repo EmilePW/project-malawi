@@ -1,0 +1,23 @@
+.donate {
+	width: 150px;
+	height: 50px;
+	background: none;
+	border: 1px solid white;
+	color: white;
+
+	font-family: 'ADA Hybrid Medium';
+	font-size: 12px;
+	line-height: 22px;
+	letter-spacing: 1px;
+	outline: none;
+
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.donate:hover {
+	background: green;
+	color: black;
+}

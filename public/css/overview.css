@@ -1,0 +1,82 @@
+.overview {
+	background: cornsilk;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	position: absolute;
+}
+
+.section-top {
+	height: 10%;
+}
+
+.section-title {
+	position: absolute;
+	right: 5%;
+	top: 5%;
+	font-family: 'ADA Hybrid Medium';
+	letter-spacing: 1px;
+	width: 30%;
+	text-align: right;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.main-copy {
+	position: absolute;
+	height: 90%;
+	top: 7.5%;
+	padding: 50px;
+	box-sizing: border-box;
+}
+
+.main-copy p {
+	-moz-column-count: 3;
+	-moz-column-gap: 50px;
+	-webkit-column-count: 3;
+	-webkit-column-gap: 50px;
+
+	font-family: 'Roboto Mono';
+	font-size: 12px;
+	line-height: 24px;
+	color: #222;
+	text-align: justify;
+
+}
+
+.main-copy p figure {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 20px;
+	border: 4px solid wheat;
+	flex-wrap: wrap;
+	display: block;
+	background: white;
+}
+
+.main-copy p figure img {
+	width: 100%;
+}
+
+.main-copy p figure figcaption {
+	width: 100%;
+	text-align: center;
+	padding-top: 10px;
+	font-family: 'Roboto Mono';
+	font-weight: 500;
+	display: block;
+}
+
+.sepia {
+  -webkit-filter: sepia(1);
+  filter: sepia(1);
+}
+
+.multiple-filters {
+    -webkit-filter: contrast(1.4) saturate(1.8) sepia(.6);
+    filter: contrast(1.4) saturate(1.8) sepia(.6);
+}

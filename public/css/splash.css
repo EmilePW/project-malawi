@@ -1,0 +1,85 @@
+.splash {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.splash-img {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	
+	background: url('https://upload.wikimedia.org/wikipedia/commons/8/8e/ILRI,_Stevie_Mann_-_Farm_landscape_in_central_Malawi.jpg') no-repeat center center fixed;
+	background-size: cover;
+
+	filter: grayscale(1);
+	-webkit-filter: grayscale(1);
+	-moz-filter: grayscale(1);
+	-o-filter: grayscale(1);
+	-ms-filter: grayscale(1);
+}
+
+.splash .video {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	z-index: -1;
+	overflow: hidden;
+}
+
+.splash .video__el {
+	height: 110%;
+	overflow: hidden;
+	z-index: -2;
+}
+
+.title-box {
+	width: 400px;
+}
+
+.title {
+	font-family: 'ADA Hybrid Medium';
+	font-size: 50px;
+	color: white;
+	line-height: 100px;
+	text-transform: uppercase;
+	letter-spacing: 10px;
+	text-indent: 10px;
+	text-align: center;
+}
+
+.black-strip {
+	width: 80%;
+	margin: 0 auto;
+	height: 3px;
+	background: black;
+}
+
+.red-strip {
+	width: 80%;
+	margin: 0 auto;
+	height: 3px;
+	background: firebrick;
+}
+
+.green-strip {
+	width: 80%;
+	margin: 0 auto;
+	height: 3px;
+	background: olivedrab;
+}
+
+.tagline {
+	width: 100%;
+	text-align: center;
+	margin-top: -200px;
+	font-family: 'Roboto Mono';
+	color: white;
+	font-size: 24px;
+	letter-spacing: 3px;
+}

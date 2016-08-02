@@ -1,0 +1,16 @@
+body {
+	background: cornsilk;
+}
+
+.footer {
+	position: absolute;
+	height: 18%;
+	width: 100%;
+	top: 82%;
+	box-sizing: border-box;
+	background: black;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

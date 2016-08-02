@@ -1,0 +1,43 @@
+.logo {
+	height: 10%;
+	top: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: black;
+	color: white;
+
+	font-family: 'ADA Hybrid Medium';
+	font-size: 14px;
+	letter-spacing: 5px;
+	text-indent: 5px;
+	text-transform: uppercase;
+}
+
+.logo a {
+	color: white;
+}
+
+.first-word:after {
+	content: "";
+	position: absolute;
+  left    : 12%;
+  top: 	6%;
+  bottom  : 0;
+  height  : 5px;
+  width   : 37%;
+  border-bottom: 1px solid green;
+}
+
+.second-word:after {
+	content: "";
+	position: absolute;
+  left    : 53.5%;
+  top: 	6%;
+  bottom  : 0;
+  height  : 5px;
+  width   : 35%;
+  border-bottom: 1px solid red;
+}

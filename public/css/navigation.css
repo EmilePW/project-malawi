@@ -1,0 +1,45 @@
+.navigation {
+	height: 72%;
+	width: 100%;
+	top: 10%;
+}
+
+.navigation ul {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	text-align: center;
+}
+
+.navigation ul li {
+	position: relative;
+  z-index : 1;
+	height: 20%;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: black;
+	font-family: 'ADA Hybrid Medium';
+	font-size: 12px;
+	line-height: 22px;
+	letter-spacing: 1px;
+}
+
+.navigation ul li a {
+	color: white;
+}
+
+.navigation ul li:after {
+	content : "";
+  position: absolute;
+  left    : 30%;
+  bottom  : 0%;
+  height  : 5px;
+  width   : 40%;
+  border-bottom: 1px solid white;
+}
