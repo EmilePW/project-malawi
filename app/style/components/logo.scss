@@ -1,0 +1,60 @@
+.logo {
+  align-items: center;
+  background: black;
+  color: white;
+  display: flex;
+  font-family: 'ADA Hybrid Medium';
+  font-size: 14px;
+  height: 10%;
+  justify-content: center;
+  left: 0;
+  letter-spacing: 5px;
+  text-indent: 5px;
+  text-transform: uppercase;
+  top: 0;
+  width: 100%;
+
+  a {
+    color: white;
+  }
+
+  .first-word:after {
+    border-bottom: 1px solid green;
+    bottom: 0;
+    content: "";
+    height: 5px;
+    left: 12%;
+    position: absolute;
+    top: 6%;
+    width: 37%;
+  }
+
+  .second-word:after {
+    border-bottom: 1px solid red;
+    bottom: 0;
+    content: "";
+    height: 5px;
+    left: 53.5%;
+    position: absolute;
+    top: 6%;
+    width: 35%;
+  }
+}
+
+@media (max-width: 769px) {
+  .logo {
+    height: 20%;
+
+    .first-word:after {
+      left: 22%;
+      top: 12%;
+      width: 27%;
+    }
+
+    .second-word:after {
+      left: 52.5%;
+      top: 12%;
+      width: 26%;
+    }
+  }
+}

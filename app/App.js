@@ -9,6 +9,8 @@ import Conservation from './components/Conservation';
 import Health from './components/Health';
 import Economy from './components/Economy';
 
+require('./style/style.scss');
+
 class App extends React.Component {
 	constructor() {
 		super();

@@ -6,7 +6,7 @@ class Donate extends React.Component {
 	}
 	render() {
 		return (
-			<a href="https://www.justgiving.com/ruxandrapopescu" target="_blank">
+			<a href="http://www.villagereach.org/" target="_blank">
 				<button className="donate">Donate</button>
 			</a>
 		);

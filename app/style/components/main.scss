@@ -1,0 +1,14 @@
+.main-content {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 80%;
+	height: 100%;
+}
+
+@media all and (max-width: 769px) {
+  .main-content {
+    top: 250px;
+    width: 100%;
+  }
+}

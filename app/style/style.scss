@@ -1,0 +1,26 @@
+@import './reset.scss';
+@import './layout.scss';
+@import './components/components.scss';
+
+body {
+  background: cornsilk;
+}
+
+*::selection {
+  background: olivedrab;
+  color: white;
+}
+
+a, a:visited, a:active {
+  text-decoration: none;
+}
+
+.sepia {
+  -webkit-filter: sepia(1);
+  filter: sepia(1);
+}
+
+.multiple-filters {
+    -webkit-filter: contrast(1.4) saturate(1.8) sepia(.6);
+    filter: contrast(1.4) saturate(1.8) sepia(.6);
+}
