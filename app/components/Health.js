@@ -11,7 +11,7 @@ class Health extends React.Component {
 					<h2 className="section-title">Healthcare and HIV/AIDS</h2>
 				</header>
 				<section className="main-copy">
-					<p>
+					<article>
 						Life expectancy at birth in Malawi is 50 years old, although many don’t make it that far with high rates of infant mortality. There is a high risk for many diseases, including hepatitis A, typhoid fever, malaria, plague and rabies. The highest and most prevalent risk, however, is for HIV/AIDS.
 						<br/><br/>
 						<figure>
@@ -34,7 +34,7 @@ class Health extends React.Component {
 						There is a severe lack of healthcare professionals in Malawi, in the most poverty-stricken areas, such as the Nkhata Bay District, there is a single doctor in the district, supplying for one-hundred-thousand residents.
 						<br/><br/>
 						Trained volunteers from overseas can aid local communities and health organisations by lowering the ratio of citizens per healthcare professional.
-					</p>
+					</article>
 				</section>
 			</section>
 		);

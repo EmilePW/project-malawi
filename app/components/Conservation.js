@@ -11,7 +11,7 @@ class Conservation extends React.Component {
 					<h2 className="section-title">Conservation, Sustainability and the Environment</h2>
 				</header>
 				<section className="main-copy">
-					<p>
+					<article>
 						Composing the interface between Tanzania and Northern Mozambique is Lake Malawi, the 9th largest lake in the world, containing more species of fish than any other.
 						<br/><br/>
 						<figure>
@@ -26,7 +26,7 @@ class Conservation extends React.Component {
 						In these two signets of nature, water and earth, lie two difficult questions. Firstly, the world is steadily reducing its tobacco consumption, subsequently leading a drop in the price of the crop. While this is rightly done for the health implications of smoking, in what direction can Malawi’s agricultural industry pivot to avoid catastrophe, especially in lieu of significant deforestation? Second, in the light of food crises, how will Malawi continue to feed its people while avoiding long-term destruction of fish populations, mid-term marring of farmland quality and short-term obseletion of endangered species?
 						<br/><br/>
 						Complete answers remain hidden, but the work of domestic and international organisations and partnerships goes some way to posing solutions. Teaching of subsistence farming techniques, environmental awareness programs, anti-poaching and anti-pollution initiatives and other efforts all aim to ensure a future for many Malawians and the local environment.
-					</p>
+					</article>
 				</section>
 			</section>
 		);

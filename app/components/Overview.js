@@ -11,7 +11,7 @@ class Overview extends React.Component {
 					<h2 className="section-title">An Overview</h2>
 				</header>
 				<section className="main-copy">
-					<p>
+					<article>
 						Malawi is a landlocked country in the south east of the African continent, bordered by Tanzania to the North, Zambia to the West, and Mozambique to the rest.
 						<br/><br/>
 						<figure>
@@ -31,7 +31,7 @@ class Overview extends React.Component {
 						<br/><br/>
 						Project Malawi is designed to give a brief overview of issues the country is currently facing and provides links to donate to organisations working on them.
 
-					</p>
+					</article>
 				</section>
 			</section>
 		);

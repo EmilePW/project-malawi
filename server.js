@@ -4,4 +4,8 @@ var app = express()
 
 app.use(express.static(path.join(__dirname, '/')))
 
-app.listen(process.env.PORT || 3004)
+var port = process.env.PORT || 3004
+app.listen(port)
+
+
+console.log('Listening on port ' +  port)

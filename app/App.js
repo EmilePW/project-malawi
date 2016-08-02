@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from'react-dom';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import Sidebar from './components/Sidebar';
 import Main from './components/Main';
 import Splash from './components/Splash';
@@ -24,7 +24,7 @@ class App extends React.Component {
 }
 
 ReactDOM.render(
-	<Router history={hashHistory}>
+	<Router history={browserHistory}>
 		<Route path="/" component={App}>
 			<Route component={Main}>
 				<IndexRoute component={Splash}></IndexRoute>

@@ -31,7 +31,7 @@
 	box-sizing: border-box;
 }
 
-.main-copy p {
+.main-copy article {
 	-moz-column-count: 3;
 	-moz-column-gap: 50px;
 	-webkit-column-count: 3;
@@ -45,7 +45,7 @@
 
 }
 
-.main-copy p figure {
+.main-copy article figure {
 	width: 100%;
 	display: flex;
 	justify-content: center;
@@ -58,11 +58,11 @@
 	background: white;
 }
 
-.main-copy p figure img {
+.main-copy article figure img {
 	width: 100%;
 }
 
-.main-copy p figure figcaption {
+.main-copy article figure figcaption {
 	width: 100%;
 	text-align: center;
 	padding-top: 10px;

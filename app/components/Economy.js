@@ -11,7 +11,7 @@ class Economy extends React.Component {
 					<h2 className="section-title">The Economy</h2>
 				</header>
 				<section className="main-copy">
-					<p>
+					<article>
 						The active economy of Malawi is primarily agricultural, with around 90% of the population living in rural land. As a nation of farmers, tobacco is the primary export - despite its size, Malawi is the fifth largest producer of raw tobacco.
 						<br/><br/>
 						<figure>
@@ -29,7 +29,7 @@ class Economy extends React.Component {
 						</figure>
 						<br/>
 						Aid will need to continue for some years, and one can only hope that flooding and droughts do not reign supreme in the fight to earn a living.
-					</p>
+					</article>
 				</section>
 			</section>
 		);
